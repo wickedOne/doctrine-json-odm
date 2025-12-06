@@ -1,12 +1,10 @@
 <?php
 
 /*
- * This file is part of the Symfony MakerBundle package.
+ * (c) Kévin Dunglas <dunglas@gmail.com>
  *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
@@ -23,24 +21,19 @@ return static function (ContainerConfigurator $container) {
     $services = $container->services();
 
     $services->set('dunglas_doctrine_json_odm.normalizer.backed_enum', BackedEnumNormalizer::class)
-        ->private()
-    ;
+        ->private();
 
     $services->set('dunglas_doctrine_json_odm.normalizer.uid', UidNormalizer::class)
-        ->private()
-    ;
+        ->private();
 
     $services->set('dunglas_doctrine_json_odm.normalizer.datetime', DateTimeNormalizer::class)
-        ->private()
-    ;
+        ->private();
 
     $services->set('dunglas_doctrine_json_odm.normalizer.array', ArrayDenormalizer::class)
-        ->private()
-    ;
+        ->private();
 
     $services->set('dunglas_doctrine_json_odm.type_mapper', TypeMapper::class)
-        ->private()
-    ;
+        ->private();
 
     $services->set('dunglas_doctrine_json_odm.normalizer.object', ObjectNormalizer::class)
         ->private()
@@ -50,8 +43,7 @@ return static function (ContainerConfigurator $container) {
             service('serializer.property_accessor'),
             service('property_info')->ignoreOnInvalid(),
             service('serializer.mapping.class_discriminator_resolver')->ignoreOnInvalid(),
-        ])
-    ;
+        ]);
 
     $services->set('dunglas_doctrine_json_odm.serializer', Serializer::class)
         ->public()
@@ -67,6 +59,5 @@ return static function (ContainerConfigurator $container) {
                 service('serializer.encoder.json'),
             ],
             service('dunglas_doctrine_json_odm.type_mapper')->ignoreOnInvalid(),
-        ])
-    ;
+        ]);
 };
