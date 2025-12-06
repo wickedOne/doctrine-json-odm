@@ -53,7 +53,7 @@ return static function (ContainerConfigurator $container) {
                 service('dunglas_doctrine_json_odm.normalizer.uid')->ignoreOnInvalid(),
                 service('dunglas_doctrine_json_odm.normalizer.datetime'),
                 service('dunglas_doctrine_json_odm.normalizer.array'),
-                service('dunglas_doctrine_json_odm.normalizer.object')
+                service('dunglas_doctrine_json_odm.normalizer.object'),
             ],
             [
                 service('serializer.encoder.json'),
