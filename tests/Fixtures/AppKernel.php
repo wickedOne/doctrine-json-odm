@@ -59,6 +59,14 @@ class AppKernel extends Kernel
             ],
         ]);
 
+        if (PHP_VERSION_ID > 80400) {
+            $container->loadFromExtension('doctrine', [
+                'orm' => [
+                    'enable_native_lazy_objects' => true,
+                ],
+            ]);
+        }
+
         // Make a few services public until we depend on Symfony 4.1+ and can use the new test container
         $container->addCompilerPass(new MakeServicesPublicPass());
     }
