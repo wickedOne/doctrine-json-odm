@@ -7,6 +7,8 @@
  * with this source code in the file LICENSE.
  */
 
+use Composer\InstalledVersions;
+use Composer\Semver\VersionParser;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Dunglas\DoctrineJsonOdm\Bundle\DunglasDoctrineJsonOdmBundle;
 use Dunglas\DoctrineJsonOdm\Tests\Fixtures\TestBundle\DependencyInjection\MakeServicesPublicPass;
@@ -49,14 +51,20 @@ class AppKernel extends Kernel
             'http_method_override' => false,
         ]);
 
+        $orm = [
+            'auto_generate_proxy_classes' => true,
+            'auto_mapping' => true,
+        ];
+
+        if (\PHP_VERSION_ID >= 80400 && InstalledVersions::satisfies(new VersionParser, 'doctrine/orm', '^3.0')) {
+            $orm['enable_native_lazy_objects'] = true;
+        }
+
         $container->loadFromExtension('doctrine', [
             'dbal' => [
                 'url' => '%env(resolve:DATABASE_URL)%',
             ],
-            'orm' => [
-                'auto_generate_proxy_classes' => true,
-                'auto_mapping' => true,
-            ],
+            'orm' => $orm,
         ]);
 
         // Make a few services public until we depend on Symfony 4.1+ and can use the new test container
